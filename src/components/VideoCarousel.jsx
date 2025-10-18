@@ -143,30 +143,7 @@ const VideoCarousel = () => {
           <div key={list.id} id="slider" className="sm:pr-20 pr-10">
             <div className="video-carousel_container">
               <div className="w-full h-full flex-ceter rounded-3xl overflow-hidden bg-black">
-                <video
-                  id="video"
-                  playsInline={true}
-                  preload="auto"
-                  muted
-                  className={`${
-                    list.id === 2 && "translate-x-44"
-                  } pointer-events-none`}
-                  ref={(el) => (videoRef.current[i] = el)}
-                  onEnded={() =>
-                    i != 3
-                      ? hanldeProcess("video-end", i)
-                      : hanldeProcess("video-last")
-                  }
-                  onPlay={() => {
-                    setVideo((prevVideo) => ({
-                      ...prevVideo,
-                      isPlaying: true,
-                    }));
-                  }}
-                  onLoadedMetadata={(e) => hanldeLoadedMetadata(i, e)}
-                >
-                  <source src={list.video} type="video/mp4" />
-                </video>
+                test
               </div>
 
               <div className="absolute top-12 left-[5%] z-10">

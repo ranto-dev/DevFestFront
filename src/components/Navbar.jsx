@@ -1,11 +1,55 @@
-import { appleImg, bagImg, searchImg } from "../utils";
+import { useState } from "react";
 import { navLists } from "../constants";
+import LoginForm from "./authentification/loginForm.jsx";
+import SigninForm from "./authentification/signinForm.jsx";
+import Modal from "./layout/modal.jsx";
 
 const Navbar = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [modal, setModal] = useState({ type: null });
+  const [isConnected, setIsConnected] = useState(false);
+
+  const LogOut = (e) => {
+    alert("handleLogout");
+  };
+
+  const openModal = (type) => {
+    setModal({ type });
+  };
+
+  const closeModal = () => {
+    setModal({ type: null });
+  };
+
+  const handleLogin = () => {
+    alert("handleLogin");
+  };
+
+  const handleSignin = () => {
+    alert("handleSignin");
+  };
+
+  const renderModalContentAuth = () => {
+    const { type } = modal;
+
+    if (!type) return null;
+
+    switch (type) {
+      case "login":
+        return <LoginForm onClose={closeModal} onCreate={handleLogin} />;
+
+      case "signin":
+        return <SigninForm onClose={closeModal} onCreate={handleSignin} />;
+
+      default:
+        return null;
+    }
+  };
+
   return (
-    <header className="w-full py-5 sm:px-10 px-5 flex justify-between items-center">
-      <nav className="flex w-full screen-max-width">
-        <img src={appleImg} alt="Apple" width={14} height={18} />
+    <header className="w-full sm:px-10 px-5 flex justify-between items-center">
+      <nav className="flex justify-center items-center w-full screen-max-width">
+        <p>Your App</p>
 
         <div className="flex flex-1  justify-center max-sm:hidden ">
           {navLists.map((nav) => {
@@ -20,11 +64,20 @@ const Navbar = () => {
           })}
         </div>
 
-        <div className="flex items-baseline gap-7 max-sm:justify-end max-sm:flex-1">
-          <img src={searchImg} alt="search" width={18} height={18} />
-          <img src={bagImg} alt="bag" width={18} height={18} />
-        </div>
+        {isConnected === true ? (
+          <div>bla bla</div>
+        ) : (
+          <div className="flex items-baseline gap-7 max-sm:justify-end max-sm:flex-1">
+            <button onClick={() => openModal("signin")}>S'inscrire</button>
+            <button onClick={() => openModal("login")} className="btn">
+              Se connecter
+            </button>
+          </div>
+        )}
       </nav>
+      <Modal isOpen={modal.type !== null} onClose={closeModal}>
+        {renderModalContentAuth()}
+      </Modal>
     </header>
   );
 };
