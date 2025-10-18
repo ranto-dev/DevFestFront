@@ -7,7 +7,7 @@ import Modal from "./layout/modal.jsx";
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [modal, setModal] = useState({ type: null });
-  const [isConnected, setIsConnected] = useState(false);
+  const [isConnected, setIsConnected] = useState(true);
 
   const LogOut = (e) => {
     alert("handleLogout");
@@ -48,24 +48,34 @@ const Navbar = () => {
 
   return (
     <header className="w-full sm:px-10 px-5 flex justify-between items-center">
-      <nav className="flex justify-center items-center w-full screen-max-width">
+      <nav className="flex justify-between items-center w-full screen-max-width">
         <p>Your App</p>
 
-        <div className="flex flex-1  justify-center max-sm:hidden ">
-          {navLists.map((nav) => {
-            return (
-              <div
-                key={nav}
-                className="px-5 text-sm cursor-pointer text-gray hover:text-white transition-all"
-              >
-                {nav}
-              </div>
-            );
-          })}
-        </div>
+        {isConnected === true ? null : (
+          <div className="flex flex-1  justify-center max-sm:hidden ">
+            {navLists.map((nav) => {
+              return (
+                <div
+                  key={nav}
+                  className="px-5 text-sm cursor-pointer text-gray hover:text-white transition-all"
+                >
+                  {nav}
+                </div>
+              );
+            })}
+          </div>
+        )}
 
         {isConnected === true ? (
-          <div>bla bla</div>
+          <div className="flex items-baseline gap-7 max-sm:justify-end max-sm:flex-1">
+            <button
+              onClick={() => openModal("logout")}
+              className="btn"
+              style={{ backgroundColor: "red" }}
+            >
+              Se deconnecter
+            </button>
+          </div>
         ) : (
           <div className="flex items-baseline gap-7 max-sm:justify-end max-sm:flex-1">
             <button onClick={() => openModal("signin")}>S'inscrire</button>
