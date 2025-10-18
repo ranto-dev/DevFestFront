@@ -22,10 +22,12 @@ const SigninForm = ({ onClose, onCreate }) => {
   };
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      <h1 className="text-center text-3xl">Formulaire d'inscription</h1>
+      <h1 className="text-center text-3xl text-black ">Formulaire d'inscription</h1>
       <div className="space-y-2">
         <div>
-          <label htmlFor="full_name">votre nom complet</label>
+          <label className="text-black" htmlFor="full_name">
+            votre nom complet
+          </label>
           <input
             type="text"
             name="full_name"
@@ -37,7 +39,9 @@ const SigninForm = ({ onClose, onCreate }) => {
           />
         </div>
         <div>
-          <label htmlFor="username">nom d'utilisateur</label>
+          <label className="text-black" htmlFor="username">
+            nom d'utilisateur
+          </label>
           <input
             type="text"
             name="username"
@@ -49,7 +53,9 @@ const SigninForm = ({ onClose, onCreate }) => {
           />
         </div>
         <div>
-          <label htmlFor="email">email</label>
+          <label className="text-black" htmlFor="email">
+            email
+          </label>
           <input
             type="email"
             name="email"
@@ -61,7 +67,9 @@ const SigninForm = ({ onClose, onCreate }) => {
           />
         </div>
         <div>
-          <label htmlFor="password">mot de passe</label>
+          <label className="text-black" htmlFor="password">
+            mot de passe
+          </label>
           <input
             type="password"
             name="password"
@@ -73,7 +81,9 @@ const SigninForm = ({ onClose, onCreate }) => {
           />
         </div>
         <div>
-          <label htmlFor="conf_password">Confirmer votre mot de passe</label>
+          <label className="text-black" htmlFor="conf_password">
+            Confirmer votre mot de passe
+          </label>
           <input
             type="password"
             name="conf_password"
@@ -88,7 +98,7 @@ const SigninForm = ({ onClose, onCreate }) => {
       <div>
         <button
           type="submit"
-          className="bg-blue-500 text-white p-4 rounded-full"
+          className="btn"
         >
           S'inscrire
         </button>

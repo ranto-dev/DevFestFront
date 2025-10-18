@@ -19,11 +19,11 @@ const LoginForm = ({ onClose, onCreate }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      <h1 className="text-center text-3xl">Formulaire de connexion</h1>
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <h1 className="text-center text-3xl text-black">Formulaire de connexion</h1>
       <div className="space-y-2">
         <div>
-          <label htmlFor="username">nom d'utilisateur</label>
+          <label className="text-black" htmlFor="username">nom d'utilisateur</label>
           <input
             type="text"
             name="username"
@@ -35,7 +35,7 @@ const LoginForm = ({ onClose, onCreate }) => {
           />
         </div>
         <div>
-          <label htmlFor="password">mot de passe</label>
+          <label className="text-black" htmlFor="password">mot de passe</label>
           <input
             type="password"
             name="password"
@@ -50,7 +50,7 @@ const LoginForm = ({ onClose, onCreate }) => {
       <div>
         <button
           type="submit"
-          className="bg-blue-500 text-white p-4 rounded-full"
+          className="btn"
         >
           Se connecter
         </button>
