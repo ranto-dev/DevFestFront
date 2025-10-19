@@ -1,16 +1,18 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { navLists } from "../constants";
 import LoginForm from "./authentification/loginForm.jsx";
 import SigninForm from "./authentification/signinForm.jsx";
 import Modal from "./layout/modal.jsx";
 import LoginFormProducteur from "./authentification/loginFormProducteur.jsx";
 import SigninFormProducteur from "./authentification/signinFormProducteur.jsx";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [modal, setModal] = useState({ type: null });
   const [isConnected, setIsConnected] = useState(false);
   const [typeUser, setTypeUser] = useState("user")
+  const navigate = useNavigate()
 
   const handleTypeUser = () => {
     if (typeUser == "user") {
@@ -31,8 +33,10 @@ const Navbar = () => {
     setModal({ type: null });
   };
 
+  
+
   const handleLogin = (loginInfo) => {
-    // alert("handleLogin");
+    alert("handleLogin");
     // alert(loginInfo.username)
     let form_data = new FormData()
     form_data.set("username", loginInfo.username)
@@ -49,6 +53,7 @@ const Navbar = () => {
           window.localStorage.setItem("token", res.access_token)
           setIsConnected(true)
           alert("Connectez avec succès . . . ")
+          // navigate("/espace-utilisateur")
         } else {
           alert('Erreur lors de la connexion, vérifiez votre nom d\'utilisateur et votre mot de passe . . . ')
         }
@@ -136,13 +141,23 @@ const Navbar = () => {
           alert("Incription Terminé")
         }
       })
-      
+
       .catch(err => {
         console.error(err)
         alert("Erreur lors de l'inscription")
       })
   };
 
+  // useEffect(()=>{
+  //   if (window.localStorage.getItem("token")){
+  //     fetch('http://'+window.location.hostname+':8000/users/me', {
+  //       method: 'GET',
+  //       headers: {
+  //         "Authorization": "Bearer "+window.localStorage.getItem("token")
+  //       }
+  //     })
+  //   }
+  // }, [])
 
   const logOut = () => {
     setIsConnected(false)
