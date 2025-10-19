@@ -21,11 +21,93 @@ const ProducerSpace = () => {
   const handleUpdateProduit = (id, updatedData) => {
     // code pour modification
     console.log("handleUpdate" + id, updatedData);
+    fetch('http://' + window.location.hostname + ':8000/aliment/' + id, {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json"
+      },
+      body: JSON.stringify({
+        "nom": updatedData.produit,
+        "quantite": updatedData.quantite,
+        "prix": updatedData.prix,
+        "qualite": updatedData.qualite,
+        "producteur_id": updatedData.producteur_id,
+        "region": updatedData.region
+      })
+    })
+      .then(res => {
+        res.json()
+      })
+      .then(res => {
+        console.log(res)
+        if (window.localStorage.getItem('token')) {
+          fetch('http://' + window.location.hostname + ':8000/producteur/me', {
+            'headers': {
+              "Authorization": "Bearer " + window.localStorage.getItem("token")
+            }
+          })
+            .then(res => res.json())
+            .then(res => {
+              console.log(res)
+
+              fetch("http://" + window.location.hostname + ":8000/aliment/producteur/" + res.id, {
+                method: "GET",
+              })
+                .then((response) => response.json())
+                .then((response) => {
+                  console.log(response);
+                  setProduits(response);
+                  setTimeout(() => {
+                    setIsLoading(false);
+                  }, 2000);
+                });
+            })
+            .catch(err => {
+              console.error(err)
+            })
+        }
+      })
     alert("Votre publication a été modifée avec success!");
   };
 
   const handleDeleteProduit = (id) => {
     alert("Delete produit id: " + id);
+    fetch('http://' + window.location.hostname + ':8000/aliment/' + id, {
+      method: "DELETE",
+      
+    })
+      .then(res => {
+        res.json()
+      })
+      .then(res => {
+        console.log(res)
+        if (window.localStorage.getItem('token')) {
+          fetch('http://' + window.location.hostname + ':8000/producteur/me', {
+            'headers': {
+              "Authorization": "Bearer " + window.localStorage.getItem("token")
+            }
+          })
+            .then(res => res.json())
+            .then(res => {
+              console.log(res)
+
+              fetch("http://" + window.location.hostname + ":8000/aliment/producteur/" + res.id, {
+                method: "GET",
+              })
+                .then((response) => response.json())
+                .then((response) => {
+                  console.log(response);
+                  setProduits(response);
+                  setTimeout(() => {
+                    setIsLoading(false);
+                  }, 2000);
+                });
+            })
+            .catch(err => {
+              console.error(err)
+            })
+        }
+      })
     closeModal();
   };
 
@@ -80,17 +162,59 @@ const ProducerSpace = () => {
   };
 
   useEffect(() => {
-    fetch("/data/produits.json", {
-      method: "GET",
-    })
-      .then((response) => response.json())
-      .then((response) => {
-        console.log(response);
-        setProduits(response);
-        setTimeout(() => {
-          setIsLoading(false);
-        }, 2000);
-      });
+    if (window.localStorage.getItem('token')) {
+      fetch('http://' + window.location.hostname + ':8000/producteur/me', {
+        'headers': {
+          "Authorization": "Bearer " + window.localStorage.getItem("token")
+        }
+      })
+        .then(res => res.json())
+        .then(res => {
+          console.log(res)
+          if (res.detail){
+            fetch("/data/produits.json", {
+              method: "GET",
+            })
+              .then((response) => response.json())
+              .then((response) => {
+                console.log(response);
+                setProduits(response);
+                setTimeout(() => {
+                  setIsLoading(false);
+                }, 500);
+              });
+          }else{
+            fetch("http://" + window.location.hostname + ":8000/aliment/producteur/" + res.id, {
+              method: "GET",
+            })
+              .then((response) => response.json())
+              .then((response) => {
+                console.log(response);
+                setProduits(response);
+                setTimeout(() => {
+                  setIsLoading(false);
+                }, 2000);
+              });
+          }
+          
+        })
+        .catch(err => {
+          console.error(err)
+        })
+    } else {
+      fetch("/data/produits.json", {
+        method: "GET",
+      })
+        .then((response) => response.json())
+        .then((response) => {
+          console.log(response);
+          setProduits(response);
+          setTimeout(() => {
+            setIsLoading(false);
+          }, 500);
+        });
+    }
+
   }, []);
 
   const regions = [
@@ -123,6 +247,7 @@ const ProducerSpace = () => {
     quantite: 1,
     prix: 1,
     region: "",
+    qualite: 0
   });
 
   if (isLoading === true) {
@@ -134,6 +259,70 @@ const ProducerSpace = () => {
       </div>
     );
   }
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    if (window.localStorage.getItem('token')) {
+      fetch('http://' + window.location.hostname + ':8000/producteur/me', {
+        'headers': {
+          "Authorization": "Bearer " + window.localStorage.getItem("token")
+        }
+      })
+        .then(res => res.json())
+        .then(res => {
+          console.log(res)
+          console.log({
+            nom: infoProducteur.produit,
+            quantite: infoProducteur.quantite,
+            qualite: infoProducteur.qualite,
+            prix: infoProducteur.prix,
+            region: infoProducteur.region,
+            producteur_id: res.id
+          })
+          fetch('http://' + window.location.hostname + ':8000/aliment', {
+            method: "POST",
+            headers: {
+              "content-type": "application/json"
+            },
+            body: JSON.stringify({
+              "nom": infoProducteur.produit,
+              "quantite": infoProducteur.quantite,
+              "prix": infoProducteur.prix,
+              "qualite": infoProducteur.qualite,
+              "producteur_id": res.id,
+              "region": infoProducteur.region
+            })
+
+
+            // body: JSON.stringify({
+            //   nom: infoProducteur.produit,
+            //   quantite: infoProducteur.quantite,
+            //   qualite: infoProducteur.qualite,
+            //   prix: infoProducteur.prix,
+            //   region: infoProducteur.region,
+            //   producteur_id : res.id
+            // })
+          })
+            .then(result => result.json())
+            .then(result => {
+              console.log(result)
+              fetch("http://" + window.location.hostname + ":8000/aliment/producteur/" + res.id, {
+                method: "GET",
+              })
+                .then((response) => response.json())
+                .then((response) => {
+                  console.log(response);
+                  setProduits(response);
+                  setTimeout(() => {
+                    setIsLoading(false);
+                  }, 2000);
+                });
+            })
+        })
+        .catch(err => {
+          console.error(err)
+        })
+    }
+  }
 
   return (
     <div>
@@ -142,7 +331,7 @@ const ProducerSpace = () => {
         <div className="flex justify-start items-start gap-4 p-4">
           <form
             className="border w-[50%] p-4 rounded-lg shadow-xl space-y-4"
-            action=""
+            onSubmit={handleSubmit}
           >
             <div>
               <h1 className="text-2xl text-center">Nouveau Produit</h1>
@@ -154,8 +343,8 @@ const ProducerSpace = () => {
                   type="text"
                   id="produit"
                   value={infoProducteur.produit}
-                  onChange={(e) => setInfoProducteur(e.target.value)}
-                  className="w-full rounded-full p-2 focus:ring-blue-500 "
+                  onChange={(e) => setInfoProducteur({ ...infoProducteur, produit: e.target.value })}
+                  className="w-full rounded-full p-2 focus:ring-blue-500  text-black"
                 />
               </div>
               <div className="space-y-2">
@@ -163,9 +352,23 @@ const ProducerSpace = () => {
                 <input
                   type="number"
                   id="quantite"
+                  min={0}
                   value={infoProducteur.quantite}
-                  onChange={(e) => setInfoProducteur(e.target.value)}
-                  className="w-full rounded-full p-2 focus:ring-blue-500 "
+                  onChange={(e) => setInfoProducteur({ ...infoProducteur, quantite: e.target.value })}
+                  className="w-full rounded-full p-2 focus:ring-blue-500  text-black"
+                />
+              </div>
+              <div className="space-y-2">
+                <label htmlFor="quantite">Qualité</label>
+                <input
+                  type="number"
+                  id="quantite"
+                  min={0}
+                  max={1}
+                  step={0.1}
+                  value={infoProducteur.qualite}
+                  onChange={(e) => setInfoProducteur({ ...infoProducteur, qualite: e.target.value })}
+                  className="w-full rounded-full p-2 focus:ring-blue-500 text-black "
                 />
               </div>
               <div className="space-y-2">
@@ -173,9 +376,10 @@ const ProducerSpace = () => {
                 <input
                   type="number"
                   id="prix"
+                  min={0}
                   value={infoProducteur.prix}
-                  onChange={(e) => setInfoProducteur(e.target.value)}
-                  className="w-full rounded-full p-2 focus:ring-blue-500 "
+                  onChange={(e) => setInfoProducteur({ ...infoProducteur, prix: e.target.value })}
+                  className="w-full rounded-full p-2 focus:ring-blue-500 text-black"
                 />
               </div>
               <div>
@@ -185,7 +389,7 @@ const ProducerSpace = () => {
                   id="region"
                   className="w-full rounded-full text-black p-2 focus:ring-blue-500 "
                   value={infoProducteur.region}
-                  onChange={(e) => setInfoProducteur(e.target.value)}
+                  onChange={(e) => setInfoProducteur({ ...infoProducteur, region: e.target.value })}
                 >
                   <option value="">-- Sélectionnez une région --</option>
                   {regions.map((region) => (
@@ -225,7 +429,7 @@ const ProducerSpace = () => {
                       </button>
                     </div>
                     <div className="mt-4">
-                      <h1 className="text-2xl">{produit.produit}</h1>
+                      <h1 className="text-2xl">{produit.nom}</h1>
                     </div>
                     <div>
                       <p> Quantité: {produit.quantite} </p>

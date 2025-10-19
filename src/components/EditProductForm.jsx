@@ -2,8 +2,9 @@ import { useState } from "react";
 
 function EditProductForm({ produit, onClose, onSave }) {
   const [form, setForm] = useState({
-    produit: produit.produit,
+    produit: produit.nom,
     quantite: produit.quantite,
+    qualite: produit.qualite,
     prix: produit.prix,
     region: produit.region,
   });
@@ -38,6 +39,14 @@ function EditProductForm({ produit, onClose, onSave }) {
         value={form.quantite}
         onChange={handleChange}
         placeholder="Quantité"
+        className="w-full border p-2 rounded"
+      />
+      <input
+        type="number"
+        name="qualite"
+        value={form.qualite}
+        onChange={handleChange}
+        placeholder="Qualité"
         className="w-full border p-2 rounded"
       />
       <input
