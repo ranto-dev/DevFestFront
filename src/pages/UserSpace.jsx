@@ -5,7 +5,7 @@ import { Canvas } from "@react-three/fiber";
 import { Environment, OrbitControls } from "@react-three/drei";
 import { KitchenModel } from "../components/kitchen/kitchenModel.jsx";
 
-const UserSpace = () => {
+const UserSpace = ({ isConnected, setIsConneted }) => {
   const regions = [
     "Analamanga",
     "Vakinankaratra",
@@ -38,9 +38,9 @@ const UserSpace = () => {
 
   return (
     <div>
-      <Navbar />
+      <Navbar isConnected={isConnected} setIsConnected={setIsConneted} />
       <Hero>
-        <div className="w-full h-[100vh] absolute top-2" style={{ zIndex: -1 }}>
+        {/* <div className="w-full h-[100vh] absolute top-2" style={{ zIndex: -1 }}>
           <Canvas
             camera={{
               position: [0, 15, -15],
@@ -52,11 +52,9 @@ const UserSpace = () => {
             <OrbitControls target={[3, 5, 0]} />
             <KitchenModel scale={30} />
           </Canvas>
-        </div>
+        </div> */}
         <div className="flex justify-center items-center gap-4 p-4">
-          <form
-            className="bg-white w-[50%] p-4 mt-4 rounded-lg shadow-xl space-y-4"
-          >
+          <form className="bg-white w-[50%] p-4 mt-4 rounded-lg shadow-xl space-y-4">
             <div>
               <h1 className="text-4xl text-center">Nouveau info</h1>
             </div>

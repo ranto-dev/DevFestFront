@@ -6,10 +6,9 @@ import Modal from "./layout/modal.jsx";
 import LoginFormProducteur from "./authentification/loginFormProducteur.jsx";
 import SigninFormProducteur from "./authentification/signinFormProducteur.jsx";
 
-const Navbar = () => {
+const Navbar = ({ isConnected, setIsConnected }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [modal, setModal] = useState({ type: null });
-  const [isConnected, setIsConnected] = useState(false);
   const [typeUser, setTypeUser] = useState("user");
 
   const handleTypeUser = () => {
@@ -219,14 +218,20 @@ const Navbar = () => {
 
         {isConnected === true ? (
           <div className="flex items-baseline gap-7 max-sm:justify-end max-sm:flex-1">
-            <button className="btn" onClick={() => logOut()}>
+            <button
+              className="btn bg-red-500 text-white"
+              onClick={() => logOut()}
+            >
               Se déconnecter
             </button>
           </div>
         ) : (
           <div className="flex items-baseline gap-7 max-sm:justify-end max-sm:flex-1">
             <button onClick={() => openModal("signin")}>S'inscrire</button>
-            <button onClick={() => openModal("login")} className="btn">
+            <button
+              onClick={() => openModal("login")}
+              className="btn text-white"
+            >
               Se connecter
             </button>
           </div>

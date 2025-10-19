@@ -15,8 +15,8 @@ function Item({ text }) {
       style={itemContainer}
       className="border rounded-r-[6rem] w-[75%] m-auto flex justify-center items-center"
     >
-      <div ref={ref} className="w-[50vw]">
-        <p>{text}</p>
+      <div ref={ref} className="w-[50vw] h-[40px]">
+        <p className="text-2xl">{text}</p>
         <figure style={progressIconContainer}>
           <svg
             style={progressIcon}
