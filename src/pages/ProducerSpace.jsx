@@ -1,10 +1,83 @@
 import { useEffect, useState } from "react";
 import Hero from "../components/hero/Hero.jsx";
 import Navbar from "../components/Navbar.jsx";
+import { FaPen, FaSpinner, FaTrash } from "react-icons/fa6";
+import EditProductForm from "../components/EditProductForm.jsx";
+import Modal from "../components/layout/modal.jsx";
 
 const ProducerSpace = () => {
   const [produits, setProduits] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [modal, setModal] = useState({ type: null, produit: null });
+
+  const openModal = (type, produit) => {
+    setModal({ type, produit });
+  };
+
+  const closeModal = () => {
+    setModal({ type: null, produit: null });
+  };
+
+  const handleUpdateProduit = (id, updatedData) => {
+    // code pour modification
+    console.log("handleUpdate" + id, updatedData);
+    alert("Votre publication a été modifée avec success!");
+  };
+
+  const handleDeleteProduit = (id) => {
+    alert("Delete produit id: " + id);
+    closeModal();
+  };
+
+  const renderModalContent = () => {
+    const { type, produit } = modal;
+
+    if (!type) return null;
+
+    switch (type) {
+      case "edit":
+        return (
+          produit && (
+            <EditProductForm
+              produit={produit}
+              onClose={closeModal}
+              onSave={handleUpdateProduit}
+            />
+          )
+        );
+
+      case "delete":
+        return (
+          produit && (
+            <>
+              <h2 className="text-xl font-bold text-red-600 mb-2">
+                Supprimer le produit
+              </h2>
+              <p>
+                Voulez-vous vraiment supprimer <strong>{produit.title}</strong> ?
+              </p>
+              <div className="mt-4 flex gap-4">
+                <button
+                  onClick={() => handleDeleteProduit(produit.id)}
+                  className="bg-red-600 text-white px-4 py-2 rounded"
+                >
+                  Supprimer
+                </button>
+                <button
+                  onClick={closeModal}
+                  className="bg-gray-300 px-4 py-2 rounded"
+                >
+                  Annuler
+                </button>
+              </div>
+            </>
+          )
+        );
+
+      default:
+        return null;
+    }
+  };
 
   useEffect(() => {
     fetch("/data/produits.json", {
@@ -12,6 +85,7 @@ const ProducerSpace = () => {
     })
       .then((response) => response.json())
       .then((response) => {
+        console.log(response);
         setProduits(response);
         setTimeout(() => {
           setIsLoading(false);
@@ -51,11 +125,21 @@ const ProducerSpace = () => {
     region: "",
   });
 
+  if (isLoading === true) {
+    return (
+      <div className="w-full h-screen flex justify-center items-center">
+        <div>
+          <FaSpinner className="animate-spin" />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div>
       <Navbar />
       <Hero>
-        <div className="flex justify-center items-center gap-4 p-4">
+        <div className="flex justify-start items-start gap-4 p-4">
           <form
             className="border w-[50%] p-4 rounded-lg shadow-xl space-y-4"
             action=""
@@ -119,11 +203,47 @@ const ProducerSpace = () => {
             </div>
           </form>
           <div className="w-full h-full space-y-4 ">
-            <div className="bg-green-500">Reultat</div>
+            <div className="w-full grid grid-cols-4 gap-4">
+              {produits.map((produit) => {
+                return (
+                  <div
+                    key={produit.id}
+                    className="border relative rounded-xl p-4"
+                  >
+                    <div className="absolute top-2 right-2 flex gap-2">
+                      <button
+                        onClick={() => openModal("edit", produit)}
+                        className="text-blue"
+                      >
+                        <FaPen />
+                      </button>
+                      <button
+                        onClick={() => openModal("delete", produit)}
+                        className="text-red-500"
+                      >
+                        <FaTrash />
+                      </button>
+                    </div>
+                    <div className="mt-4">
+                      <h1 className="text-2xl">{produit.produit}</h1>
+                    </div>
+                    <div>
+                      <p> Quantité: {produit.quantite} </p>
+                      <p> Prix: {produit.prix} Ariary </p>
+                      <p> Région: {produit.region} </p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
             <div className="bg-red-500">Dashboard</div>
           </div>
         </div>
       </Hero>
+
+      <Modal isOpen={modal.type !== null} onClose={closeModal}>
+        {renderModalContent()}
+      </Modal>
     </div>
   );
 };
