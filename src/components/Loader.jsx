@@ -1,12 +1,35 @@
-import { Html } from "@react-three/drei";
+import { FaSpinner } from "react-icons/fa6";
 
 const Loader = () => {
   return (
-    <Html>
-      <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center">
-        <div className="w-[10vw] h-[10-vw] rounded-full">Loading...</div>
+    <div className="w-full h-screen flex justify-center items-center">
+      <div className="flex gap-4 justify-center items-center ania">
+        <div
+          className="w-10 h-2 bg-blue-600 animate-spin "
+          style={{ animationDelay: "" }}
+        ></div>
+        <div
+          className="w-10 h-2 bg-blue-600 animate-spin "
+          style={{ animationDelay: "100ms" }}
+        ></div>
+        <div
+          className="w-10 h-2 bg-blue-600 animate-spin "
+          style={{ animationDelay: "200ms" }}
+        ></div>
+        <div
+          className="w-10 h-2 bg-blue-600 animate-spin "
+          style={{ animationDelay: "300ms" }}
+        ></div>
+        <div
+          className="w-10 h-2 bg-blue-600 animate-spin "
+          style={{ animationDelay: "400ms" }}
+        ></div>
+        <div
+          className="w-10 h-2 bg-blue-600 animate-spin "
+          style={{ animationDelay: "500ms" }}
+        ></div>
       </div>
-    </Html>
+    </div>
   );
 };
 
