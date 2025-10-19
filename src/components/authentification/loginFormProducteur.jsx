@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const LoginForm = ({ onClose, onCreate }) => {
+const LoginFormProducteur = ({ onClose, onCreate }) => {
   const [loginInfo, setLoginnfo] = useState({
     username: "",
     password: "",
@@ -23,7 +23,7 @@ const LoginForm = ({ onClose, onCreate }) => {
       <h1 className="text-center text-3xl text-black">Formulaire de connexion</h1>
       <div className="space-y-2">
         <div>
-          <label className="text-black" htmlFor="username">nom d'utilisateur</label>
+          <label className="text-black" htmlFor="username">nom d'utilisateur producteur</label>
           <input
             type="text"
             name="username"
@@ -59,4 +59,4 @@ const LoginForm = ({ onClose, onCreate }) => {
   );
 };
 
-export default LoginForm;
+export default LoginFormProducteur;
