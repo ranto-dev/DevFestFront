@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { navLists } from "../constants";
 import LoginForm from "./authentification/loginForm.jsx";
 import SigninForm from "./authentification/signinForm.jsx";
 import Modal from "./layout/modal.jsx";
 import LoginFormProducteur from "./authentification/loginFormProducteur.jsx";
 import SigninFormProducteur from "./authentification/signinFormProducteur.jsx";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -31,8 +32,10 @@ const Navbar = () => {
     setModal({ type: null });
   };
 
+  
+
   const handleLogin = (loginInfo) => {
-    // alert("handleLogin");
+    alert("handleLogin");
     // alert(loginInfo.username)
     let form_data = new FormData();
     form_data.set("username", loginInfo.username);
