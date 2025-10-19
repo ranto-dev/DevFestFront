@@ -7,11 +7,40 @@ import LoginFormProducteur from "./authentification/loginFormProducteur.jsx";
 import SigninFormProducteur from "./authentification/signinFormProducteur.jsx";
 import { useNavigate } from "react-router-dom";
 
+
+function useLocalStorage(key, defaultValue) {
+  // 1. Initialiser l'�tat en lisant depuis localStorage
+  const [value, setValue] = useState(() => {
+    let currentValue;
+
+    try {
+      // Tenter de lire la valeur depuis localStorage
+      currentValue = JSON.parse(
+        localStorage.getItem(key) || String(defaultValue)
+      );
+    } catch (error) {
+      console.log(error);
+      currentValue = defaultValue;
+    }
+
+    return currentValue;
+  });
+
+  // 2. Synchroniser l'�tat avec localStorage chaque fois que la valeur change
+  useEffect(() => {
+    localStorage.setItem(key, JSON.stringify(value));
+  }, [value, key]);
+
+  return [value, setValue];
+}
+
+
+
 const Navbar = ({ isConnected, setIsConnected }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [modal, setModal] = useState({ type: null });
   const [typeUser, setTypeUser] = useState("user");
-
+  const [connected, setConnected] = useLocalStorage("connected", false)
   const handleTypeUser = () => {
     if (typeUser == "user") {
       setTypeUser("producteur");
@@ -31,7 +60,7 @@ const Navbar = ({ isConnected, setIsConnected }) => {
     setModal({ type: null });
   };
 
-  
+  const navigate = useNavigate()
 
   const handleLogin = (loginInfo) => {
     alert("handleLogin");
@@ -49,8 +78,11 @@ const Navbar = ({ isConnected, setIsConnected }) => {
         console.log(res);
         if (res.access_token) {
           window.localStorage.setItem("token", res.access_token);
-          setIsConnected(true);
+          // setIsConnected(true);
+          // window.localStorage.setItem("connected", true)
+          setConnected(true)
           alert("Connectez avec succès . . . ");
+          navigate("/espace-utilisateur")
         } else {
           alert(
             "Erreur lors de la connexion, vérifiez votre nom d'utilisateur et votre mot de passe . . . "
@@ -75,8 +107,10 @@ const Navbar = ({ isConnected, setIsConnected }) => {
         console.log(res);
         if (res.access_token) {
           window.localStorage.setItem("token", res.access_token);
-          setIsConnected(true);
+          // setIsConnected(true);
+          setConnected(true)
           alert("Connectez avec succès . . . ");
+          navigate("/espace-producteur")
         } else {
           alert(
             "Erreur lors de la connexion, vérifiez votre nom d'utilisateur et votre mot de passe . . . "
@@ -148,7 +182,9 @@ const Navbar = ({ isConnected, setIsConnected }) => {
   };
 
   const logOut = () => {
-    setIsConnected(false);
+    // setIsConnected(false);
+    setConnected(false)
+    // window.localStorage.setItem('connected', false) 
     window.localStorage.removeItem("token");
   };
   const renderModalContentAuth = () => {
@@ -202,7 +238,7 @@ const Navbar = ({ isConnected, setIsConnected }) => {
   return (
     <header className="w-full sm:px-10 px-5 flex justify-between items-center">
       <nav className="flex justify-between items-center w-full screen-max-width">
-        <p>Kalykil</p>
+        <p>Kalykil {connected == false ? "false" : "true"} </p>
 
         {isConnected === true ? null : (
           <div className="flex flex-1  justify-center max-sm:hidden ">
@@ -219,7 +255,7 @@ const Navbar = ({ isConnected, setIsConnected }) => {
           </div>
         )}
 
-        {isConnected === true ? (
+        {connected == true ? (
           <div className="flex items-baseline gap-7 max-sm:justify-end max-sm:flex-1">
             <button
               className="btn bg-red-500 text-white"
