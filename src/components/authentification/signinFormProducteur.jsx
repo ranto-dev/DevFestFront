@@ -1,26 +1,18 @@
 import { useState } from "react";
 
-const SigninForm = ({ onClose, onCreate }) => {
+const SigninFormProducteur = ({ onClose, onCreate }) => {
   const [signInfo, setSignInfo] = useState({
     username: "",
     email: "",
     full_name: "",
     password: "",
-    conf_password: "",
-    region: "",
-    budget_journalier: 0,
-    addresse: ""
+    conf_password: ""
   });
-  const liste_region = [ "ANALAMANGA", "BONGOLAVA", "ITASY", "VAKINANKARATRA", "DIANA", "SAVA", "AMORON'I MANIA", "ATSIMO-ATSINANANA", "HAUTE MATSIATRA", "IHOROMBE", "FITOVINANY", "VATOVAVY", "BETSIBOKA", "BOENY", "MELAKY", "SOFIA", "ALAOTRA-MANGORO", "ANALANJIROFO", "ATSINANANA", "ANDROY", "ANOSY", "ATSIMO-ANDREFANA", "MENABE" ]
+  
   const handleChange = (e) => {
     setSignInfo({ ...signInfo, [e.target.name]: e.target.value });
   };
-  function capitalizeFirstLetter(str) {
-    if (str.length === 0) {
-      return "";
-    }
-    return str[0].toUpperCase() + str.slice(1);
-  }
+  
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!signInfo.username || !signInfo.password)
@@ -48,7 +40,7 @@ const SigninForm = ({ onClose, onCreate }) => {
         </div>
         <div>
           <label className="text-black" htmlFor="username">
-            nom d'utilisateur
+            Nom d'utilisateur producteur
           </label>
           <input
             type="text"
@@ -62,7 +54,7 @@ const SigninForm = ({ onClose, onCreate }) => {
         </div>
         <div>
           <label className="text-black" htmlFor="email">
-            email
+            Email
           </label>
           <input
             type="email"
@@ -76,7 +68,7 @@ const SigninForm = ({ onClose, onCreate }) => {
         </div>
         <div>
           <label className="text-black" htmlFor="password">
-            mot de passe
+            Mot de passe
           </label>
           <input
             type="password"
@@ -102,51 +94,9 @@ const SigninForm = ({ onClose, onCreate }) => {
             placeholder="**********"
           />
         </div>
-        <div>
-          <label className="text-black" htmlFor="conf_password">
-            Budget Journalier
-          </label>
-          <input
-            type="number"
-            name="budget_journalier"
-            value={signInfo.budget_journalier}
-            onChange={handleChange}
-            id="budget_journalier"
-            className="w-full border border-black/20 rounded-lg p-2 text-black"
-            placeholder="1200"
-          />
-        </div>
-        <div>
-          <label className="text-black" htmlFor="conf_password">
-            Region
-          </label>
-          {/* <input
-            type="password"
-            name="conf_password"
-            value={signInfo.conf_password}
-            onChange={handleChange}
-            id="conf_password"
-            className="w-full border border-black/20 rounded-lg p-2"
-            placeholder="**********"
-          /> */}
-          <select name="region" id="region" onChange={handleChange} value={signInfo.region} className="w-full border border-black/20 rounded-lg p-2 text-black">
-            {liste_region.map(reg=><option value={capitalizeFirstLetter(reg.toLowerCase())}>{capitalizeFirstLetter(reg.toLowerCase())}</option>)}
-          </select>
-        </div>
-        <div>
-          <label className="text-black" htmlFor="conf_password">
-            Addresse
-          </label>
-          <input
-            type="text"
-            name="addresse"
-            value={signInfo.addresse}
-            onChange={handleChange}
-            id="addresse"
-            className="w-full border border-black/20 rounded-lg p-2 text-black"
-            placeholder="Lot A 1 . . . "
-          />
-        </div>
+        
+        
+       
       </div>
       <div>
         <button
@@ -160,4 +110,4 @@ const SigninForm = ({ onClose, onCreate }) => {
   );
 };
 
-export default SigninForm;
+export default SigninFormProducteur;
