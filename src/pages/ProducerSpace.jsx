@@ -5,7 +5,7 @@ import { FaPen, FaSpinner, FaTrash } from "react-icons/fa6";
 import EditProductForm from "../components/EditProductForm.jsx";
 import Modal from "../components/layout/modal.jsx";
 
-const ProducerSpace = () => {
+const ProducerSpace = ({ isConnected, setIsConnected }) => {
   const [produits, setProduits] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [modal, setModal] = useState({ type: null, produit: null });
@@ -136,7 +136,8 @@ const ProducerSpace = () => {
                 Supprimer le produit
               </h2>
               <p>
-                Voulez-vous vraiment supprimer <strong>{produit.title}</strong> ?
+                Voulez-vous vraiment supprimer <strong>{produit.title}</strong>{" "}
+                ?
               </p>
               <div className="mt-4 flex gap-4">
                 <button
@@ -326,7 +327,7 @@ const ProducerSpace = () => {
 
   return (
     <div>
-      <Navbar />
+      <Navbar isConnected={isConnected} setIsConnected={setIsConnected} />
       <Hero>
         <div className="flex justify-start items-start gap-4 p-4">
           <form
