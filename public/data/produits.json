@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "produit": "Tomate",
+    "quantite": 500,
+    "prix": 1500,
+    "region": "Antsirabe"
+  },
+  {
+    "id": 2,
+    "produit": "Pomme de terre",
+    "quantite": 200,
+    "prix": 1000,
+    "region": "Antsirabe"
+  },
+  {
+    "id": 3,
+    "produit": "Poire",
+    "quantite": 1500,
+    "prix": 5500,
+    "region": "Antsiranana"
+  },
+  {
+    "id": 4,
+    "produit": "Patate",
+    "quantite": 20,
+    "prix": 5000,
+    "region": "Ambositra"
+  }
+]

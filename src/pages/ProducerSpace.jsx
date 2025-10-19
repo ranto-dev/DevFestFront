@@ -2,7 +2,23 @@ import { useEffect, useState } from "react";
 import Hero from "../components/hero/Hero.jsx";
 import Navbar from "../components/Navbar.jsx";
 
-const UserSpace = () => {
+const ProducerSpace = () => {
+  const [produits, setProduits] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("/data/produits.json", {
+      method: "GET",
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        setProduits(response);
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 2000);
+      });
+  }, []);
+
   const regions = [
     "Analamanga",
     "Vakinankaratra",
@@ -28,8 +44,10 @@ const UserSpace = () => {
     "Anosy",
   ];
 
-  const [infoUser, setInfoUser] = useState({
-    budget: 0,
+  const [infoProducteur, setInfoProducteur] = useState({
+    produit: "",
+    quantite: 1,
+    prix: 1,
     region: "",
   });
 
@@ -43,17 +61,36 @@ const UserSpace = () => {
             action=""
           >
             <div>
-              <h1 className="text-4xl text-center">Nouveau info</h1>
+              <h1 className="text-2xl text-center">Nouveau Produit</h1>
             </div>
             <div className="space-y-4">
               <div className="space-y-2">
-                <label htmlFor="budget">Votre budget</label>
+                <label htmlFor="produit">Produit</label>
+                <input
+                  type="text"
+                  id="produit"
+                  value={infoProducteur.produit}
+                  onChange={(e) => setInfoProducteur(e.target.value)}
+                  className="w-full rounded-full p-2 focus:ring-blue-500 "
+                />
+              </div>
+              <div className="space-y-2">
+                <label htmlFor="quantite">Quantité</label>
                 <input
                   type="number"
-                  name="budget"
-                  id="budget"
-                  value={infoUser.budget}
-                  onChange={(e) => setInfoUser(e.target.value)}
+                  id="quantite"
+                  value={infoProducteur.quantite}
+                  onChange={(e) => setInfoProducteur(e.target.value)}
+                  className="w-full rounded-full p-2 focus:ring-blue-500 "
+                />
+              </div>
+              <div className="space-y-2">
+                <label htmlFor="prix">Prix</label>
+                <input
+                  type="number"
+                  id="prix"
+                  value={infoProducteur.prix}
+                  onChange={(e) => setInfoProducteur(e.target.value)}
                   className="w-full rounded-full p-2 focus:ring-blue-500 "
                 />
               </div>
@@ -63,8 +100,8 @@ const UserSpace = () => {
                   name="region"
                   id="region"
                   className="w-full rounded-full text-black p-2 focus:ring-blue-500 "
-                  value={infoUser.region}
-                  onChange={(e) => setInfoUser(e.target.value)}
+                  value={infoProducteur.region}
+                  onChange={(e) => setInfoProducteur(e.target.value)}
                 >
                   <option value="">-- Sélectionnez une région --</option>
                   {regions.map((region) => (
@@ -77,7 +114,7 @@ const UserSpace = () => {
             </div>
             <div>
               <button type="submit" className="btn">
-                Ajouter
+                Ajouter Produit
               </button>
             </div>
           </form>
@@ -91,4 +128,4 @@ const UserSpace = () => {
   );
 };
 
-export default UserSpace;
+export default ProducerSpace;
