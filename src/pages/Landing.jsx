@@ -30,7 +30,9 @@ const Landing = ({ isConnected, setIsConnected }) => {
   };
   return (
     <main>
-      <Navbar isConnected={isConnected} setIsConnected={setIsConnected} />
+      <div id="#Acceuil">
+        <Navbar isConnected={isConnected} setIsConnected={setIsConnected} />
+      </div>
       <Hero>
         <div className="h-5/6 w-full flex-center flex-col">
           <div className="grid text-4xl text-center w-[50%] text-white h-screen place-content-center">
@@ -69,13 +71,18 @@ const Landing = ({ isConnected, setIsConnected }) => {
       <br />
       <br />
       <br />
-      <About />
-      <div className="my-20">
+      <div id="#Apropos">
+        <About />
+      </div>
+      <div id="#Service" className="my-20">
         <Banner {...BannerData} reverse={false} />
         <Banner {...BannerData2} reverse={true} />
       </div>
       {/* <Service /> */}
-      <div className="w-full flex justify-center items-center p-20 ">
+      <div
+        id="#Contact"
+        className="w-full flex justify-center items-center p-20 "
+      >
         <div className="w-[50%] h-[500px] p-10 bg-white rounded-2xl shadow-xl ">
           <form className="space-y-4">
             <div>

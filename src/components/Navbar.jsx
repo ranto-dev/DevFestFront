@@ -31,8 +31,6 @@ const Navbar = ({ isConnected, setIsConnected }) => {
   };
 
   const handleLogin = (loginInfo) => {
-    // alert("handleLogin");
-    // alert(loginInfo.username)
     let form_data = new FormData();
     form_data.set("username", loginInfo.username);
     form_data.set("password", loginInfo.password);
@@ -205,12 +203,13 @@ const Navbar = ({ isConnected, setIsConnected }) => {
           <div className="flex flex-1  justify-center max-sm:hidden ">
             {navLists.map((nav) => {
               return (
-                <div
+                <a
+                  href={`#${nav.replace(" ", "")}`}
                   key={nav}
                   className="px-5 text-sm cursor-pointer text-gray hover:text-white transition-all"
                 >
                   {nav}
-                </div>
+                </a>
               );
             })}
           </div>
