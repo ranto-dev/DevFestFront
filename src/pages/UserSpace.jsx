@@ -40,7 +40,7 @@ const UserSpace = ({ isConnected, setIsConneted }) => {
     <div>
       <Navbar isConnected={isConnected} setIsConnected={setIsConneted} />
       <Hero>
-        {/* <div className="w-full h-[100vh] absolute top-2" style={{ zIndex: -1 }}>
+        <div className="w-full h-[100vh] absolute top-2" style={{ zIndex: -1 }}>
           <Canvas
             camera={{
               position: [0, 15, -15],
@@ -52,7 +52,7 @@ const UserSpace = ({ isConnected, setIsConneted }) => {
             <OrbitControls target={[3, 5, 0]} />
             <KitchenModel scale={30} />
           </Canvas>
-        </div> */}
+        </div>
         <div className="flex justify-center items-center gap-4 p-4">
           <form className="bg-white w-[50%] p-4 mt-4 rounded-lg shadow-xl space-y-4">
             <div>

@@ -4,6 +4,9 @@ import Navbar from "../components/Navbar.jsx";
 import { FaPen, FaSpinner, FaTrash } from "react-icons/fa6";
 import EditProductForm from "../components/EditProductForm.jsx";
 import Modal from "../components/layout/modal.jsx";
+import { Canvas } from "@react-three/fiber";
+import { Environment, OrbitControls } from "@react-three/drei";
+import { KitchenModel } from "../components/kitchen/kitchenModel.jsx";
 
 const ProducerSpace = ({ isConnected, setIsConnected }) => {
   const [produits, setProduits] = useState(null);
@@ -140,10 +143,22 @@ const ProducerSpace = ({ isConnected, setIsConnected }) => {
     <div>
       <Navbar isConnected={isConnected} setIsConnected={setIsConnected} />
       <Hero>
+        <div className="w-full h-[100vh] absolute top-2" style={{ zIndex: -1 }}>
+          <Canvas
+            camera={{
+              position: [0, 15, -15],
+              fov: 50,
+            }}
+          >
+            <Environment preset="sunset" />
+            <ambientLight intensity={0.5} />
+            <OrbitControls target={[3, 5, 0]} />
+            <KitchenModel scale={30} />
+          </Canvas>
+        </div>
         <div className="flex justify-start items-start gap-4 p-4">
           <form
-            className="border w-[50%] p-4 rounded-lg shadow-xl space-y-4"
-            action=""
+            className="border bg-white w-[50%] p-4 mt-5 rounded-lg shadow-xl space-y-4"
           >
             <div>
               <h1 className="text-2xl text-center">Nouveau Produit</h1>
@@ -157,6 +172,7 @@ const ProducerSpace = ({ isConnected, setIsConnected }) => {
                   value={infoProducteur.produit}
                   onChange={(e) => setInfoProducteur(e.target.value)}
                   className="w-full rounded-full p-2 focus:ring-blue-500 "
+                  placeholder="Produit"
                 />
               </div>
               <div className="space-y-2">
@@ -198,18 +214,18 @@ const ProducerSpace = ({ isConnected, setIsConnected }) => {
               </div>
             </div>
             <div>
-              <button type="submit" className="btn">
+              <button type="submit" className="btn text-white">
                 Ajouter Produit
               </button>
             </div>
           </form>
-          <div className="w-full h-full space-y-4 ">
+          <div className="w-full h-full space-y-4 mt-6 ">
             <div className="w-full grid grid-cols-4 gap-4">
               {produits.map((produit) => {
                 return (
                   <div
                     key={produit.id}
-                    className="border relative rounded-xl p-4"
+                    className="border relative bg-white rounded-xl p-4"
                   >
                     <div className="absolute top-2 right-2 flex gap-2">
                       <button
@@ -237,7 +253,6 @@ const ProducerSpace = ({ isConnected, setIsConnected }) => {
                 );
               })}
             </div>
-            <div className="bg-red-500">Dashboard</div>
           </div>
         </div>
       </Hero>
