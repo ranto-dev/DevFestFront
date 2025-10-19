@@ -17,7 +17,7 @@ const Hero = ({children}) => {
   }, []);
 
   return (
-    <section className="w-full nav-height bg-black relative">
+    <section className="w-full nav-height relative">
       { children }
     </section>
   );

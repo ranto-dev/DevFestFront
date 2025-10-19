@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import Hero from "../components/hero/Hero.jsx";
 import Navbar from "../components/Navbar.jsx";
+import { Canvas } from "@react-three/fiber";
+import { Environment, OrbitControls } from "@react-three/drei";
+import { KitchenModel } from "../components/kitchen/kitchenModel.jsx";
 
 const UserSpace = () => {
   const regions = [
@@ -134,10 +137,22 @@ const UserSpace = () => {
     <div>
       <Navbar />
       <Hero>
+        <div className="w-full h-[100vh] absolute top-2" style={{ zIndex: -1 }}>
+          <Canvas
+            camera={{
+              position: [0, 15, -15],
+              fov: 50,
+            }}
+          >
+            <Environment preset="sunset" />
+            <ambientLight intensity={0.5} />
+            <OrbitControls target={[3, 5, 0]} />
+            <KitchenModel scale={30} />
+          </Canvas>
+        </div>
         <div className="flex justify-center items-center gap-4 p-4">
           <form
-            className="border w-[50%] p-4 rounded-lg shadow-xl space-y-4"
-            onSubmit={handleSumbit}
+            className="bg-white w-[50%] p-4 mt-4 rounded-lg shadow-xl space-y-4"
           >
             <div>
               <h1 className="text-4xl text-center">Nouveau info</h1>
