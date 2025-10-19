@@ -3,7 +3,7 @@
 import { motion, useScroll } from "framer-motion";
 import { useRef } from "react";
 
-function Item() {
+function Item({ text }) {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -11,14 +11,12 @@ function Item() {
   });
 
   return (
-    <section style={itemContainer}>
+    <section
+      style={itemContainer}
+      className="border rounded-r-[6rem] w-[75%] m-auto flex justify-center items-center"
+    >
       <div ref={ref} className="w-[50vw]">
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt
-          voluptas recusandae alias ex? Ad repudiandae quo cupiditate tenetur
-          provident fugit sint! Dicta ullam dolorum, tenetur minus quisquam vero
-          animi optio!
-        </p>
+        <p>{text}</p>
         <figure style={progressIconContainer}>
           <svg
             style={progressIcon}
@@ -54,15 +52,39 @@ function Item() {
 const About = () => {
   return (
     <>
-      <Item />
-      <Item />
-      <Item />
+      <div className="scroll-revealed text-center mx-auto mb-20">
+        <motion.h6
+          initial={{ opacity: 0, y: -100 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ type: "spring", stiffness: 100, delay: 0.2 }}
+          className="mb-2 block text-lg font-semibold text-primary"
+        >
+          A propos
+        </motion.h6>
+        <motion.h2
+          initial={{ opacity: 0, y: -100 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ type: "spring", stiffness: 100, delay: 0.4 }}
+          className="mb-6 text-6xl"
+        >
+          Mais c'est quoi Kalykil?
+        </motion.h2>
+      </div>
+      <div className="flex flex-col gap-4">
+        <Item
+          text={"Une Application qui vous aidera à prendre la décision du jour"}
+        />
+        <Item
+          text={"En fonction de votre budget et des produits de votre région"}
+        />
+        <Item text={"Tout en vous aidant à garder un équilibre alimentaire"} />
+      </div>
     </>
   );
 };
 
 const itemContainer = {
-  height: "100vh",
+  height: "40vh",
   maxHeight: "400px",
   display: "flex",
   justifyContent: "center",
@@ -71,7 +93,7 @@ const itemContainer = {
 
 const progressIconContainer = {
   position: "sticky",
-  top: 0,
+  top: "-1rem",
   width: 80,
   height: 80,
   margin: 0,
@@ -81,13 +103,15 @@ const progressIconContainer = {
 const processCircle = {
   strokeDashoffset: 0,
   strokeWidth: 5,
+  position: "absolute",
+  top: "-5rem",
   fill: "none",
 };
 
 const progressIcon = {
   ...processCircle,
   transform: "translateX(-100px) rotate(-90deg)",
-  stroke: "#ff0088",
+  stroke: "#ff4da6",
 };
 
 const progressIconIndicator = {

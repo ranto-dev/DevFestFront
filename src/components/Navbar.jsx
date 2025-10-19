@@ -200,7 +200,7 @@ const Navbar = () => {
   return (
     <header className="w-full sm:px-10 px-5 flex justify-between items-center">
       <nav className="flex justify-between items-center w-full screen-max-width">
-        <p>Your App</p>
+        <p>Kalykil</p>
 
         {isConnected === true ? null : (
           <div className="flex flex-1  justify-center max-sm:hidden ">

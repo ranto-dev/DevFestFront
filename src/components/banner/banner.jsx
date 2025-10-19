@@ -3,7 +3,7 @@ import { SlideUp } from "../../utils/SlideAnimation.js";
 
 const Banner = ({ image, tag, title, subtitle, reverse }) => {
   return (
-    <div className="bg-[#f9f9f9] py-10">
+    <div className="bg-[#f9f9f9] py-20">
       <div className="w-[90%] m-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 space-y-6 md:space-y-0">
           <div
@@ -25,7 +25,7 @@ const Banner = ({ image, tag, title, subtitle, reverse }) => {
               variants={SlideUp(0.2)}
               initial="hidden"
               whileInView={"visible"}
-              className="text-sm text-orange-600  font-semibold capitalize"
+              className="text-sm text-pink-400  font-semibold capitalize"
             >
               {tag}
             </motion.p>
@@ -51,9 +51,6 @@ const Banner = ({ image, tag, title, subtitle, reverse }) => {
               whileInView={"visible"}
               className="flex justify-center md:justify-start"
             >
-              <button className="bg-amber-300 p-3 rounded-full font-semibold">
-                Get started
-              </button>
             </motion.div>
           </div>
         </div>
